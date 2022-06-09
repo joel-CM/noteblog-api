@@ -7,11 +7,17 @@ const login = async (req, res) => {
 
   try {
     const findUser = await UserModel.findOne({ user });
-    if (!findUser) return res.json({ msg: "user or password invalid" });
+    if (!findUser)
+      return res.json({ msg: "user or password invalid", error: true });
     const isValid = bcrypt.compareSync(password, findUser.password);
-    if (!isValid) return res.json({ msg: "user or password invalid" });
+    if (!isValid)
+      return res.json({ msg: "user or password invalid", error: true });
     const token = createToken({ id: findUser._id, user: findUser.user });
-    res.json({ token });
+    res.json({
+      token,
+      user: { id: findUser._id, name: findUser.user },
+      error: false,
+    });
   } catch (err) {
     console.log(err);
   }
