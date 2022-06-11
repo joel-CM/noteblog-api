@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const db = mongoose
-  .connect("mongodb://localhost/note_blog")
+  .connect(process.env.MONGO_URL)
   .then((db) => {
     console.log("db conected");
   })

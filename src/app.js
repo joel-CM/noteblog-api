@@ -1,12 +1,12 @@
 import express from "express";
-import morgan from "morgan";
+// import morgan from "morgan";
 import routes from "./routes/index.js";
 import cors from "cors";
 
 const app = express();
 // ! middlewares
 app.use(express.json());
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(cors({ origin: "*" }));
 
 // ! settings
