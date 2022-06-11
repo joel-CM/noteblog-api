@@ -20,13 +20,15 @@ const editNote = async (req, res) => {
     }
     const userId = req.token.id;
     const note = await NoteModel.findOne({ userId, _id: id });
-    if (!note._id) {
+    if (!note) {
       return res.json({
         msg: "Note not found",
         error: true,
       });
     }
-    await NoteModel.updateOne({ userId, _id: id }, { title, description });
+    note.title = title;
+    note.description = description;
+    await note.save();
     return res.json({ msg: "updated note" });
   } catch (err) {
     console.log(err);
