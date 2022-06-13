@@ -1,12 +1,14 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 export function createToken(payload) {
-  return jwt.sign(payload, "note_blog", { expiresIn: "7d" });
+  return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
 
 export function verify(token) {
   let data = null;
-  jwt.verify(token, "note_blog", function (err, decoded) {
+  jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
     if (err) return false;
     data = decoded;
   });
