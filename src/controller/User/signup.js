@@ -9,8 +9,12 @@ const signup = async (req, res) => {
     if (user === "" || password === "") {
       return res.json({ msg: "user or password is empty", error: true });
     }
+
+    const findUser = await UserModel.findOne({ user });
+    if (findUser) return res.json({ msg: "user already exists", error: true });
+
     const newUser = await UserModel.create({ user, password });
-    res.json({ msg: "user created", error: false });
+    res.json({ msg: `user ${user} created`, error: false });
   } catch (err) {
     console.log(err);
   }
